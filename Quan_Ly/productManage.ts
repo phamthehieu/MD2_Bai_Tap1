@@ -7,22 +7,28 @@ export class ProductManage {
         this.listProduct.push(t);
     }
 
-    remove(id: number): void {
+    remove(name: string): void {
+        let index: any = this.findById(name);
+        if (index === -1) {
+            console.log('Không có')
+        } else {
+            this.listProduct.splice(index,1)
+        }
 
     }
 
-    findById(name: string) {
+    findById(name: string): Product | string {
         for (let i = 0; i < this.listProduct.length; i++) {
             if (name === this.listProduct[i].Name) {
                 return this.listProduct[i]
             }
         }
-        return -1;
+        return 'a';
     }
 
     edit(name: string, t: Product) {
         let index: any = this.findById(name);
-        if (index === -1) {
+        if (index === 'a') {
             console.log('Không có')
         } else {
             this.listProduct[index] = t;
@@ -44,9 +50,7 @@ export class ProductManage {
     }
 
     sortUpPrice() {
-        return this.listProduct.sort(function (a, b) {
-            return a.Price - b.Price
-        })
+        return this.listProduct.sort((a, b) => a.Price - b.Price)
     }
 
     sortDiscounts() {
@@ -63,5 +67,9 @@ export class ProductManage {
 
     findByTheFirm(t: string) {
         return this.listProduct.filter((el) => el.TheFirm.toLowerCase().includes(t.toLowerCase()))
+    }
+
+    displayAll(): Product[] {
+        return this.listProduct
     }
 }
